@@ -1,7 +1,6 @@
 import { parse } from "acorn";
 import type { ExecutionStep, VisualValue, VisualizerError } from "@/types/execution";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Node = any;
 type Env = Record<string, VisualValue>;
 
