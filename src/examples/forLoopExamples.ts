@@ -1,0 +1,10 @@
+export const examples = [
+  { name: "Count to five", description: "A simple for loop", code: `for (let i = 0; i < 5; i++) {\n  console.log(i);\n}` },
+  { name: "Running sum", description: "Update a variable", code: `let sum = 0;\n\nfor (let i = 1; i <= 5; i++) {\n  sum = sum + i;\n}\n\nconsole.log(sum);` },
+  { name: "Explore an array", description: "Read each array item", code: `const numbers = [10, 20, 30, 40];\n\nfor (let i = 0; i < numbers.length; i++) {\n  console.log(numbers[i]);\n}` },
+  { name: "Nested loops", description: "Outer and inner iterations", code: `for (let i = 0; i < 3; i++) {\n  for (let j = 0; j < 2; j++) {\n    console.log(i, j);\n  }\n}` },
+  { name: "Merge Sorted", description: "FunctionExpression & Reverse loop", code: `var merge = function (nums1, m, nums2, n) {\n    let p1 = m - 1;\n    let p2 = n - 1;\n    for (let i = m + n - 1; i >= 0; i--) {\n        if (p2 < 0) {\n            break;\n        }\n        if (p1 >= 0 && nums1[p1] > nums2[p2]) {\n            nums1[i] = nums1[p1];\n            p1--;\n        } else {\n            nums1[i] = nums2[p2];\n            p2--;\n        }\n    }\n};\n\nlet arr1 = [1, 2, 3, 0, 0, 0];\nlet arr2 = [2, 5, 6];\nmerge(arr1, 3, arr2, 3);\nconsole.log("MergeSort:-", arr1);` },
+  { name: "While & Break", description: "While loop with condition and break", code: `let count = 5;\nwhile (count > 0) {\n  if (count === 2) {\n    console.log("Breaking at", count);\n    break;\n  }\n  console.log("Count:", count);\n  count--;\n}` },
+  { name: "For..Of Loop", description: "Iterate over array values directly", code: `const fruits = ["Apple", "Banana", "Cherry"];\nfor (let fruit of fruits) {\n  console.log(fruit);\n}` },
+  { name: "Reverse String", description: "Math.floor and in-place array swap", code: `var reverseString = function (s) {\n  let len = s.length;\n  let halfLen = Math.floor(len / 2);\n  for (let i = 0; i < halfLen; i++) {\n    let temp = s[i];\n    s[i] = s[len - 1 - i];\n    s[len - 1 - i] = temp;\n  }\n};\n\nlet arr = ['H', 'e', 'l', 'l', 'o'];\nreverseString(arr);\nconsole.log("String:-", arr);` },
+];
