@@ -6,6 +6,14 @@ Instead of pre-rendered algorithm animations, **JavaScript Code Visualizer** per
 
 ---
 
+## 🌐 Live Demo & Testing
+
+🔗 **[https://javascript-visualizer-git-main-abhay-dubeys-projects-4d07a25d.vercel.app/](https://javascript-visualizer-git-main-abhay-dubeys-projects-4d07a25d.vercel.app/)**
+
+Try out live code execution, loop flow step-throughs, array element mutations, and variable inspection online!
+
+---
+
 ## 🚀 Key Features
 
 - **⚡ Sandboxed AST Interpreter Engine**: Safe client-side code execution using `acorn` (no unsafe `eval()` or `new Function()`).
