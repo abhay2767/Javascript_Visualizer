@@ -86,16 +86,19 @@ Includes a **VS Code-style File Explorer & Virtual File System (IndexedDB)** for
 - **Enforced File Extensions**: Only `.js` extensions allowed for user files (auto-appended if omitted).
 - **Folder & Tree Organization**: Support for nested folders, expand/collapse state, creation (`+ File`, `+ Folder`), renaming, and deletion.
 - **RECENT Section**: Displays recently opened/saved files with relative timestamps ("Just now", "5m ago", "Yesterday").
-- **EXAMPLES Section**: Displays built-in read-only preset examples (`for-loop.js`, `merge-sort.js`, `move-zeroes.js`, etc.).
+- **EXAMPLES Section**: Displays built-in read-only preset examples (`01-bubble-sort.js`, `02-binary-search.js`, `03-two-sum.js`, etc.).
 - **Reactive Search**: Filters user files & folders; auto-expands folders containing matching search results.
 - **Context Menus & Actions**: Right-click context menus and `⋯` action menus for files, folders, and root.
-- **Collapsible & Responsive**: Desktop collapse button (`[ ▣ ]`) and Mobile slide-in drawer (`☰ Explorer`).
+- **Collapsible Sidebar & Mobile Drawer**: VS Code Far-Left ActivityBar with `Ctrl+B` toggle, resizable width (180px–480px), and mobile slide-in drawer (`☰ Explorer`) with **auto-closing on file selection**.
 
-### B. Editor Session & Keyboard Shortcuts
-- **Unsaved Changes Tracking**: Visual asterisk (`bubble-sort.js *`) when editor content differs from saved file.
-- **`Ctrl + S` / `Cmd + S`**: Saves active user file immediately or opens **Save As** modal if unsaved.
-- **`Ctrl + Shift + S` / `Cmd + Shift + S`**: Opens **Save As** modal to save a copy as a new `.js` file.
-- **`▶ Run / Visualize`**: Evaluates current editor code directly through AST interpreter without needing to save first.
+### B. IDE Layout, Splitters & Mobile Responsiveness
+- **100% Full-Bleed Layout**: Edge-to-edge layout flush with browser window borders (0px side margin).
+- **VS Code Draggable Resizable Panel Splitters**: Interactive splitters to dynamically resize sidebar width and Monaco Editor vs Visualizer split ratio (20%–80%).
+- **Mobile Responsive Engine (≤ 900px)**:
+  - Disables horizontal squishing; stacks Code Editor & Visualizer in 100% full-width columns.
+  - Hides desktop ActivityBar and displays a clean top toolbar.
+  - **Mobile View Switcher Tabs**: `Code` (editor only), `Visual` (visualizer only), `Both` (stacked).
+- **Zero-Shift Scrollbars (`scrollbar-gutter: stable`)**: Prevents any panel width jump or layout shift when expanding card details.
 
 ### C. Supported Language Constructs & Interpreter Capabilities
 - **Variables & Declarations**: `let`, `const`, `var`, primitives (`number`, `string`, `boolean`, `null`, `undefined`).
@@ -104,7 +107,8 @@ Includes a **VS Code-style File Explorer & Virtual File System (IndexedDB)** for
 - **Conditionals**: `if` / `else if` / `else` with condition evaluation highlights (`truthy` / `falsy`).
 - **Functions**: `FunctionDeclaration`, `FunctionExpression`, Arrow Functions, custom parameter binding, and return values.
 - **Pass-By-Reference Arrays & Indexing**: In-place element assignments (`arr[i] = val`) update array states live in the UI.
-### D. Popular DSA Algorithms & Time/Space Complexity Panel
+
+### D. Popular DSA Algorithms & Dynamic Time/Space Complexity Engine
 - **Popular DSA Presets**: Built-in interactive code examples for famous algorithms:
   - `01 Bubble Sort`: $O(n^2)$ Time, $O(1)$ Space
   - `02 Binary Search`: $O(\log n)$ Time, $O(1)$ Space
@@ -113,11 +117,12 @@ Includes a **VS Code-style File Explorer & Virtual File System (IndexedDB)** for
   - `05 Fibonacci (DP Iterative)`: $O(n)$ Time, $O(1)$ Space
   - `06 Merge Sorted Arrays`: $O(m + n)$ Time, $O(1)$ Space
   - `07 Reverse String`: $O(n)$ Time, $O(1)$ Space
-- **Time & Space Complexity Panel (`ComplexityPanel`)**:
-  - Displays Best, Average, and Worst Time Complexity badges (e.g. $O(n^2)$, $O(\log n)$, $O(n)$).
+- **Dynamic Time & Space Complexity Analysis (`ComplexityPanel`)**:
+  - Automatically verifies if code matches original preset or is custom/edited.
+  - Dynamically calculates Best, Average, Worst Time Complexity ($O(1)$, $O(n)$, $O(n^2)$, etc.) from AST maximum loop depth.
   - Displays Auxiliary Space Complexity badge (e.g. $O(1)$).
   - Displays Total Runtime AST Operation step counts and maximum loop nesting depth.
-  - Human-readable expandable breakdown card explaining *why* the loop structure produces its time & space bounds.
+  - Human-readable expandable breakdown card explaining *why* the code structure produces its complexity bounds.
 
 ---
 
