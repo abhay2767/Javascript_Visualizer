@@ -267,6 +267,7 @@ export function VisualizerApp() {
           isSidebarOpen={isSidebarOpen}
           isFullscreen={isFullscreen}
           onToggleSidebar={() => setIsSidebarOpen((v) => !v)}
+          onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
           onToggleFullscreen={toggleFullscreen}
         />
 

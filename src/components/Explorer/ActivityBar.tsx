@@ -6,19 +6,29 @@ export function ActivityBar({
   isSidebarOpen,
   isFullscreen,
   onToggleSidebar,
+  onOpenMobileDrawer,
   onToggleFullscreen,
 }: {
   isSidebarOpen: boolean;
   isFullscreen?: boolean;
   onToggleSidebar: () => void;
+  onOpenMobileDrawer?: () => void;
   onToggleFullscreen?: () => void;
 }) {
+  const handleClick = () => {
+    if (typeof window !== "undefined" && window.innerWidth <= 900 && onOpenMobileDrawer) {
+      onOpenMobileDrawer();
+    } else {
+      onToggleSidebar();
+    }
+  };
+
   return (
-    <div className="activity-bar desktop-only">
+    <div className="activity-bar">
       <button
         className={`activity-btn ${isSidebarOpen ? "active" : ""}`}
-        onClick={onToggleSidebar}
-        title={isSidebarOpen ? "Hide Explorer (Ctrl+B)" : "Show Explorer (Ctrl+B)"}
+        onClick={handleClick}
+        title="Toggle Explorer"
         aria-label="Toggle Explorer Sidebar"
       >
         <Files size={20} />
