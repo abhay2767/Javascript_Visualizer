@@ -29,7 +29,7 @@ button { cursor: pointer; }
 .execution-line { background:linear-gradient(90deg,#8164ff28,transparent)!important;border-left:2px solid #8b6cff; }
 .execution-glyph { background:#8b6cff;border-radius:50%;width:7px!important;height:7px!important;margin:9px 0 0 8px; }
 
-.visual-side { overflow-y:auto; scrollbar-width:thin; }
+.visual-side { overflow-y:auto; scrollbar-gutter:stable; scrollbar-width:thin; }
 .visual-head { position:sticky;top:0;background:var(--surface);z-index:3; }
 .runtime-stats { display:flex;gap:15px;color:var(--muted);font-size:10px; }
 .runtime-stats b { color:var(--text);font:12px var(--font-mono); }
