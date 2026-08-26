@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Code2, Moon, Play, Sparkles, Sun, TriangleAlert } from "lucide-react";
 import { CodeEditor } from "./CodeEditor";
 import { EditorToolbar } from "./EditorToolbar";
+import { ActivityBar } from "./Explorer/ActivityBar";
 import { ExplorerSidebar } from "./Explorer/ExplorerSidebar";
 import { CreateFileModal } from "./Explorer/Modals/CreateFileModal";
 import { CreateFolderModal } from "./Explorer/Modals/CreateFolderModal";
@@ -103,10 +104,11 @@ export function VisualizerApp() {
     }
   };
 
-  // Register keyboard shortcuts (Ctrl+S, Ctrl+Shift+S)
+  // Register keyboard shortcuts (Ctrl+S, Ctrl+Shift+S, Ctrl+B)
   useKeyboardShortcuts({
     onSave: handleSave,
     onSaveAs: () => setIsSaveAsOpen(true),
+    onToggleSidebar: () => setIsSidebarOpen((v) => !v),
   });
 
   const progress = result.steps.length ? ((playback.current + 1) / result.steps.length) * 100 : 0;
@@ -156,8 +158,14 @@ export function VisualizerApp() {
         </div>
       </header>
 
-      {/* Main Workspace with Explorer Sidebar + Editor + Visualizer */}
+      {/* Main Workspace with VS Code Activity Bar + Explorer Sidebar + Editor + Visualizer */}
       <div className={`workspace-wrapper ${isSidebarOpen ? "sidebar-open" : "sidebar-collapsed"}`}>
+        {/* VS Code Far-Left Activity Bar */}
+        <ActivityBar
+          isSidebarOpen={isSidebarOpen}
+          onToggleSidebar={() => setIsSidebarOpen((v) => !v)}
+        />
+
         {/* Desktop Sidebar */}
         <ExplorerSidebar
           isOpen={isSidebarOpen}

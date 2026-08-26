@@ -895,3 +895,51 @@ button { cursor: pointer; }
   }
 }
 
+/* VS Code Activity Bar */
+.activity-bar {
+  width: 48px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  height: 664px;
+}
+
+.activity-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  display: grid;
+  place-items: center;
+  position: relative;
+  transition: .15s;
+}
+
+.activity-btn:hover {
+  color: var(--text);
+  background: var(--surface2);
+}
+
+.activity-btn.active {
+  color: var(--purple);
+  background: #17152b;
+}
+
+.activity-btn .active-indicator {
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  background: var(--purple);
+  border-radius: 0 3px 3px 0;
+}
+
+

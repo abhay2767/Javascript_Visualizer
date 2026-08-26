@@ -3,9 +3,11 @@ import { useEffect } from "react";
 export function useKeyboardShortcuts({
   onSave,
   onSaveAs,
+  onToggleSidebar,
 }: {
   onSave: () => void;
   onSaveAs: () => void;
+  onToggleSidebar?: () => void;
 }) {
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -20,9 +22,16 @@ export function useKeyboardShortcuts({
           onSave();
         }
       }
+
+      if (ctrlOrCmd && e.key.toLowerCase() === "b") {
+        e.preventDefault();
+        if (onToggleSidebar) {
+          onToggleSidebar();
+        }
+      }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onSave, onSaveAs]);
+  }, [onSave, onSaveAs, onToggleSidebar]);
 }
