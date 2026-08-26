@@ -807,6 +807,33 @@ button { cursor: pointer; }
     height: auto !important;
   }
 
+  .editor-toolbar {
+    padding: 6px 8px;
+    height: auto;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .toolbar-left {
+    width: 100%;
+    justify-content: space-between;
+    gap: 4px;
+    flex-wrap: wrap;
+  }
+
+  .toolbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .file-active-badge {
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
   .workspace-splitter {
     display: none !important;
   }

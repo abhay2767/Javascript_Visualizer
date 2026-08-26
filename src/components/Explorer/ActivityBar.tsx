@@ -24,7 +24,7 @@ export function ActivityBar({
   };
 
   return (
-    <div className="activity-bar">
+    <div className="activity-bar desktop-only">
       <button
         className={`activity-btn ${isSidebarOpen ? "active" : ""}`}
         onClick={handleClick}

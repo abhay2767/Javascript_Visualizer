@@ -157,6 +157,7 @@ export function VisualizerApp() {
     const next = interpret(file.content);
     setResult(next);
     playback.restart();
+    setIsMobileDrawerOpen(false);
   };
 
   // Select Preset Example handler
@@ -169,6 +170,7 @@ export function VisualizerApp() {
     const next = interpret(exCode);
     setResult(next);
     playback.restart();
+    setIsMobileDrawerOpen(false);
   };
 
   // Save File handler (Ctrl+S or Save Button)
