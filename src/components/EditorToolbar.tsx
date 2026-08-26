@@ -1,14 +1,16 @@
 "use client";
 
-import { Check, FileCode, Menu, PanelLeftClose, PanelLeftOpen, Play, Save } from "lucide-react";
+import { Check, Code2, Eye, FileCode, Layers, Menu, PanelLeftClose, PanelLeftOpen, Play, Save } from "lucide-react";
 import type { ToastMessage } from "@/hooks/useEditorSession";
 
 export function EditorToolbar({
   activeFileName,
   isDirty,
   isSidebarOpen,
+  mobileView,
   onToggleSidebar,
   onOpenMobileDrawer,
+  onSelectMobileView,
   onSave,
   onRun,
   toast,
@@ -16,8 +18,10 @@ export function EditorToolbar({
   activeFileName: string;
   isDirty: boolean;
   isSidebarOpen: boolean;
+  mobileView: "code" | "visualizer" | "both";
   onToggleSidebar: () => void;
   onOpenMobileDrawer: () => void;
+  onSelectMobileView: (view: "code" | "visualizer" | "both") => void;
   onSave: () => void;
   onRun: () => void;
   toast: ToastMessage | null;
@@ -47,6 +51,34 @@ export function EditorToolbar({
           <FileCode size={15} />
           <span className="name">{activeFileName}</span>
           {isDirty && <span className="dirty-star" title="Unsaved changes">*</span>}
+        </div>
+
+        {/* Mobile View Switcher (Code / Visualizer / Both) */}
+        <div className="mobile-view-tabs mobile-only">
+          <button
+            className={`tab-btn ${mobileView === "code" ? "active" : ""}`}
+            onClick={() => onSelectMobileView("code")}
+            title="Show Code Editor"
+          >
+            <Code2 size={13} />
+            <span>Code</span>
+          </button>
+          <button
+            className={`tab-btn ${mobileView === "visualizer" ? "active" : ""}`}
+            onClick={() => onSelectMobileView("visualizer")}
+            title="Show Visualizer"
+          >
+            <Eye size={13} />
+            <span>Visual</span>
+          </button>
+          <button
+            className={`tab-btn ${mobileView === "both" ? "active" : ""}`}
+            onClick={() => onSelectMobileView("both")}
+            title="Show Both Stacked"
+          >
+            <Layers size={13} />
+            <span>Both</span>
+          </button>
         </div>
       </div>
 

@@ -722,12 +722,98 @@ button { cursor: pointer; }
 .desktop-only { display: flex; }
 .mobile-only { display: none; }
 
+/* Mobile View Tabs Selector (Code / Visualizer / Both) */
+.mobile-view-tabs {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 7px;
+  padding: 2px;
+}
+
+.mobile-view-tabs .tab-btn {
+  background: transparent;
+  border: 0;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  padding: 4px 7px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: 0.15s;
+}
+
+.mobile-view-tabs .tab-btn.active {
+  background: var(--purple);
+  color: white;
+  box-shadow: 0 2px 8px rgba(139, 108, 255, 0.4);
+}
+
 @media (max-width: 900px) {
   .desktop-only { display: none !important; }
   .mobile-only { display: flex !important; }
-  .workspace-wrapper { flex-direction: column; padding: 0 8px; }
+  .workspace-wrapper { flex-direction: column; padding: 0 4px; min-height: auto; }
   .sidebar-wrapper-container { display: none !important; }
   .explorer-sidebar:not(.mobile-drawer) { display: none !important; }
+
+  .workspace {
+    flex-direction: column !important;
+    height: auto !important;
+    gap: 14px !important;
+  }
+
+  .workspace.mobile-view-code .visual-side {
+    display: none !important;
+  }
+
+  .workspace.mobile-view-code .editor-panel-box {
+    display: flex !important;
+    width: 100% !important;
+    flex: none !important;
+    max-width: 100% !important;
+    height: calc(100vh - 200px) !important;
+  }
+
+  .workspace.mobile-view-visualizer .editor-panel-box {
+    display: none !important;
+  }
+
+  .workspace.mobile-view-visualizer .visual-side {
+    display: block !important;
+    width: 100% !important;
+    flex: none !important;
+    max-width: 100% !important;
+    height: calc(100vh - 200px) !important;
+  }
+
+  .workspace.mobile-view-both .editor-panel-box {
+    display: flex !important;
+    width: 100% !important;
+    flex: none !important;
+    max-width: 100% !important;
+    height: 380px !important;
+  }
+
+  .workspace.mobile-view-both .visual-side {
+    display: block !important;
+    width: 100% !important;
+    flex: none !important;
+    max-width: 100% !important;
+    min-height: 480px !important;
+    height: auto !important;
+  }
+
+  .workspace-splitter {
+    display: none !important;
+  }
+
+  .complexity-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
 }
 
 @keyframes pulse { 0% { box-shadow:inset 0 0 0 1px #8b6cff; } 100% { box-shadow:none; } }

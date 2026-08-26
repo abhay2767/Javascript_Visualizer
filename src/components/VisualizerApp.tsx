@@ -44,6 +44,7 @@ export function VisualizerApp() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [mobileView, setMobileView] = useState<"code" | "visualizer" | "both">("both");
 
   // Panel Resizing States (VS Code Draggable Splitters)
   const [splitRatio, setSplitRatio] = useState<number>(0.48);
@@ -370,14 +371,16 @@ export function VisualizerApp() {
             activeFileName={activeFileName}
             isDirty={isDirty}
             isSidebarOpen={isSidebarOpen}
+            mobileView={mobileView}
             onToggleSidebar={() => setIsSidebarOpen((v) => !v)}
             onOpenMobileDrawer={() => setIsMobileDrawerOpen(true)}
+            onSelectMobileView={setMobileView}
             onSave={handleSave}
             onRun={handleRunVisualize}
             toast={toast}
           />
 
-          <div className="workspace" ref={workspaceRef} style={{ display: 'flex', gap: 0 }}>
+          <div className={`workspace mobile-view-${mobileView}`} ref={workspaceRef} style={{ display: 'flex', gap: 0 }}>
             <div
               className="editor-panel-box"
               style={{
