@@ -126,11 +126,11 @@ export function ComplexityPanel({
 }) {
   const [isExpanded, setIsExpanded] = useState(true);
 
-  // Dynamic estimation if code is custom
+  // Dynamic estimation if code is custom or edited
   const timeComp = preset?.timeComplexity || {
-    best: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(n)" : `O(n${maxLoopDepth > 1 ? `^${maxLoopDepth}` : ""})`,
-    average: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(n)" : `O(n${maxLoopDepth > 1 ? `^${maxLoopDepth}` : ""})`,
-    worst: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(n)" : `O(n${maxLoopDepth > 1 ? `^${maxLoopDepth}` : ""})`,
+    best: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(1)" : `O(n${maxLoopDepth > 2 ? `^${maxLoopDepth - 1}` : ""})`,
+    average: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(n)" : `O(n^${maxLoopDepth})`,
+    worst: maxLoopDepth === 0 ? "O(1)" : maxLoopDepth === 1 ? "O(n)" : `O(n^${maxLoopDepth})`,
     space: "O(1)",
   };
 
@@ -139,8 +139,8 @@ export function ComplexityPanel({
     (maxLoopDepth === 0
       ? "Sequential code execution with no loops. Operations run in constant time O(1)."
       : maxLoopDepth === 1
-      ? "Single loop structure. Iterates N times performing constant work per step, resulting in linear O(n) time complexity."
-      : `Nested loop structure detected (Max Depth ${maxLoopDepth}). Inner loops execute relative to outer loops, resulting in polynomial O(n${maxLoopDepth}) time complexity.`);
+      ? "Single loop structure detected (Max Depth 1). Iterates N times performing constant work per step, resulting in linear O(n) time complexity."
+      : `Nested loop structure detected (Max Depth ${maxLoopDepth}). Inner loops execute relative to outer loops, resulting in quadratic/polynomial O(n^${maxLoopDepth}) time complexity.`);
 
   return (
     <section className="complexity-card">

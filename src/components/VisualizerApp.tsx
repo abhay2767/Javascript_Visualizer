@@ -210,6 +210,15 @@ export function VisualizerApp() {
     [result.steps]
   );
 
+  const activePreset = useMemo(() => {
+    if (activeExampleIndex === null) return null;
+    const example = examples[activeExampleIndex];
+    if (!example) return null;
+    const isUnmodified =
+      activeCode.trim().replaceAll("\r\n", "\n") === example.code.trim().replaceAll("\r\n", "\n");
+    return isUnmodified ? example : null;
+  }, [activeExampleIndex, activeCode]);
+
   const activeFileName = activeFile
     ? activeFile.name
     : activeExampleIndex !== null
@@ -431,7 +440,7 @@ export function VisualizerApp() {
               ) : step ? (
                 <>
                   <ComplexityPanel
-                    preset={activeExampleIndex !== null ? examples[activeExampleIndex] : null}
+                    preset={activePreset}
                     stepsCount={result.steps.length}
                     maxLoopDepth={maxLoopDepth}
                   />
