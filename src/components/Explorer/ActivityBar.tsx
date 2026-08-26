@@ -1,13 +1,17 @@
 "use client";
 
-import { Files, FolderTree, PanelLeftClose, PanelLeftOpen } from "lucide-react";
+import { Files, Maximize2, Minimize2 } from "lucide-react";
 
 export function ActivityBar({
   isSidebarOpen,
+  isFullscreen,
   onToggleSidebar,
+  onToggleFullscreen,
 }: {
   isSidebarOpen: boolean;
+  isFullscreen?: boolean;
   onToggleSidebar: () => void;
+  onToggleFullscreen?: () => void;
 }) {
   return (
     <div className="activity-bar desktop-only">
@@ -20,6 +24,17 @@ export function ActivityBar({
         <Files size={20} />
         {isSidebarOpen && <span className="active-indicator" />}
       </button>
+
+      {onToggleFullscreen && (
+        <button
+          className="activity-btn activity-bottom-btn"
+          onClick={onToggleFullscreen}
+          title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen (100% Full-Bleed)"}
+          aria-label="Toggle Fullscreen"
+        >
+          {isFullscreen ? <Minimize2 size={18} /> : <Maximize2 size={18} />}
+        </button>
+      )}
     </div>
   );
 }

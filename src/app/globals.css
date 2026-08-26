@@ -9,7 +9,7 @@ button, select { font: inherit; }
 button { cursor: pointer; }
 .app { min-height: 100vh; color: var(--text); background: var(--bg); --bg:#080b11; --surface:#0d121b; --surface2:#111824; --border:#202938; --muted:#8190a8; --text:#edf2f8; --purple:#8b6cff; --cyan:#49d4c6; transition: .2s background,color; padding-bottom: 94px; }
 .app.light { --bg:#f4f6fa; --surface:#fff; --surface2:#f7f8fb; --border:#dfe4ec; --muted:#69758a; --text:#182030; }
-.topbar { height: 68px; padding: 0 4vw; border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background: color-mix(in srgb, var(--bg) 90%, transparent); position:sticky; top:0; z-index:10; backdrop-filter: blur(14px); }
+.topbar { height: 68px; padding: 0 16px; border-bottom: 1px solid var(--border); display:flex; align-items:center; justify-content:space-between; background: color-mix(in srgb, var(--bg) 90%, transparent); position:sticky; top:0; z-index:10; backdrop-filter: blur(14px); width: 100%; max-width: 100%; }
 .brand { color:var(--text); text-decoration:none; display:flex; align-items:center; gap:10px; font-size:15px; letter-spacing:-.01em; }
 .brand > span { width:34px;height:34px;display:grid;place-items:center;background:linear-gradient(145deg,#8b6cff,#6450c7);border-radius:9px;color:white;box-shadow:0 7px 20px #775bff35; }
 .brand strong { font-weight:700; }.brand em { font-style:normal;font-size:9px;color:#b8aaff;border:1px solid #634fa9;padding:2px 5px;border-radius:4px;letter-spacing:.1em; }
@@ -76,7 +76,7 @@ button { cursor: pointer; }
 .console-body span { color:#56ddcf; }
 .console-body p { color:#505c70;margin:5px 0; }
 
-.timeline { margin:12px 4vw 0;max-width:calc(1600px - 8vw);margin-inline:auto;border-radius:10px;padding:11px 14px; }
+.timeline { margin:12px 16px 0;max-width:calc(100% - 32px);margin-inline:auto;border-radius:10px;padding:11px 14px; }
 .timeline-head { display:flex;justify-content:space-between;color:var(--muted);font-size:9px;margin-bottom:9px; }
 .timeline-track { display:flex;gap:5px;overflow-x:auto;padding-bottom:2px; }
 .timeline-track button { flex:1;min-width:22px;max-width:46px;height:22px;border:0;background:#1a2230;border-radius:4px;color:#58657a;position:relative; }
@@ -86,7 +86,7 @@ button { cursor: pointer; }
 .timeline-track button.active { background:var(--purple);color:white;box-shadow:0 0 0 3px #8265ff24; }
 .progress { position:fixed;bottom:73px;left:0;right:0;height:2px;background:var(--border);z-index:12; }
 .progress span { display:block;height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));transition:width .25s; }
-.playback { position:fixed;bottom:0;left:0;right:0;height:74px;border-top:1px solid var(--border);background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(16px);z-index:11;display:flex;align-items:center;justify-content:space-between;padding:0 4vw; }
+.playback { position:fixed;bottom:0;left:0;right:0;height:74px;border-top:1px solid var(--border);background:color-mix(in srgb,var(--bg) 93%,transparent);backdrop-filter:blur(16px);z-index:11;display:flex;align-items:center;justify-content:space-between;padding:0 16px; }
 .control { height:35px;border:1px solid var(--border);border-radius:8px;background:var(--surface);color:var(--text);display:flex;align-items:center;gap:7px;padding:0 12px;font-size:11px; }
 .control.icon { padding:0;width:35px;justify-content:center; }
 .control.round { border-radius:50%;width:42px;height:42px;padding:0;justify-content:center; }
@@ -941,5 +941,37 @@ button { cursor: pointer; }
   background: var(--purple);
   border-radius: 0 3px 3px 0;
 }
+
+.activity-bottom-btn {
+  margin-top: auto;
+}
+
+/* Fullscreen Full-Bleed IDE Mode */
+.app.fullscreen-mode {
+  padding-bottom: 84px;
+}
+
+.app.fullscreen-mode .topbar {
+  height: 52px;
+  padding: 0 16px;
+}
+
+.app.fullscreen-mode .workspace-wrapper {
+  height: calc(100vh - 146px);
+  min-height: 0;
+  padding: 0 12px;
+}
+
+.app.fullscreen-mode .workspace {
+  height: 100%;
+}
+
+.app.fullscreen-mode .activity-bar,
+.app.fullscreen-mode .explorer-sidebar,
+.app.fullscreen-mode .editor-panel,
+.app.fullscreen-mode .visual-side {
+  height: 100%;
+}
+
 
 

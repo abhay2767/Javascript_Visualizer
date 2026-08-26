@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Code2, Moon, Play, Sparkles, Sun, TriangleAlert } from "lucide-react";
+import { useMemo, useState, useEffect } from "react";
+import { Code2, Maximize2, Minimize2, Moon, Play, Sparkles, Sun, TriangleAlert } from "lucide-react";
 import { CodeEditor } from "./CodeEditor";
 import { EditorToolbar } from "./EditorToolbar";
 import { ActivityBar } from "./Explorer/ActivityBar";
@@ -43,6 +43,27 @@ export function VisualizerApp() {
   const [dark, setDark] = useState(true);
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const handleFSChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener("fullscreenchange", handleFSChange);
+    return () => document.removeEventListener("fullscreenchange", handleFSChange);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      document.documentElement.requestFullscreen().catch(() => {});
+      setIsFullscreen(true);
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen().catch(() => {});
+      }
+      setIsFullscreen(false);
+    }
+  };
 
   // Modals state
   const [modalFileFolderId, setModalFileFolderId] = useState<string | null>(null);
@@ -132,7 +153,7 @@ export function VisualizerApp() {
     : "untitled.js";
 
   return (
-    <main className={dark ? "app dark" : "app light"}>
+    <main className={`app ${dark ? "dark" : "light"} ${isFullscreen ? "fullscreen-mode" : ""}`}>
       {/* Top Navigation Bar */}
       <header className="topbar">
         <a className="brand" href="#">
@@ -145,6 +166,14 @@ export function VisualizerApp() {
           <em>IDE</em>
         </a>
         <div className="header-actions">
+          <button
+            className="theme-toggle"
+            onClick={toggleFullscreen}
+            title={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen (100% Full-Bleed)"}
+            aria-label="Toggle Fullscreen"
+          >
+            {isFullscreen ? <Minimize2 size={17} /> : <Maximize2 size={17} />}
+          </button>
           <button
             className="theme-toggle"
             onClick={() => setDark((v) => !v)}
@@ -163,7 +192,9 @@ export function VisualizerApp() {
         {/* VS Code Far-Left Activity Bar */}
         <ActivityBar
           isSidebarOpen={isSidebarOpen}
+          isFullscreen={isFullscreen}
           onToggleSidebar={() => setIsSidebarOpen((v) => !v)}
+          onToggleFullscreen={toggleFullscreen}
         />
 
         {/* Desktop Sidebar */}
