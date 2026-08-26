@@ -727,7 +727,7 @@ button { cursor: pointer; }
 
 /* Complexity Card Styling */
 .complexity-card {
-  margin: 16px 16px 10px;
+  margin: 12px 12px 10px;
   background: var(--surface2);
   border: 1px solid var(--border);
   border-radius: 11px;
@@ -736,13 +736,15 @@ button { cursor: pointer; }
 }
 
 .complexity-head {
-  padding: 12px 16px;
+  padding: 10px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   cursor: pointer;
   background: color-mix(in srgb, var(--surface) 60%, transparent);
   user-select: none;
+  flex-wrap: wrap;
+  gap: 8px;
 }
 
 .complexity-head:hover {
@@ -757,12 +759,16 @@ button { cursor: pointer; }
   font-weight: 800;
   letter-spacing: .08em;
   color: var(--cyan);
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .complexity-head .badge-row {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-left: auto;
 }
 
 .complexity-badge {
