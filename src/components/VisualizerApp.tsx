@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState, useEffect, useRef } from "react";
 import { Code2, Maximize2, Minimize2, Moon, Play, Sparkles, Sun, TriangleAlert } from "lucide-react";
 import { CodeEditor } from "./CodeEditor";
 import { EditorToolbar } from "./EditorToolbar";
@@ -44,6 +44,70 @@ export function VisualizerApp() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isMobileDrawerOpen, setIsMobileDrawerOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+
+  // Panel Resizing States (VS Code Draggable Splitters)
+  const [splitRatio, setSplitRatio] = useState<number>(0.48);
+  const [sidebarWidth, setSidebarWidth] = useState<number>(260);
+  const [isDraggingSplitter, setIsDraggingSplitter] = useState(false);
+  const [isDraggingSidebar, setIsDraggingSidebar] = useState(false);
+  const workspaceRef = useRef<HTMLDivElement | null>(null);
+
+  const handleSplitterMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingSplitter(true);
+    document.body.classList.add("resizing-active");
+
+    const container = workspaceRef.current;
+    if (!container) return;
+
+    const containerRect = container.getBoundingClientRect();
+    const containerWidth = containerRect.width;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const offsetX = moveEvent.clientX - containerRect.left;
+      let newRatio = offsetX / containerWidth;
+      if (newRatio < 0.2) newRatio = 0.2;
+      if (newRatio > 0.8) newRatio = 0.8;
+      setSplitRatio(newRatio);
+    };
+
+    const onMouseUp = () => {
+      setIsDraggingSplitter(false);
+      document.body.classList.remove("resizing-active");
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
+
+  const handleSidebarMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setIsDraggingSidebar(true);
+    document.body.classList.add("resizing-active");
+
+    const startX = e.clientX;
+    const startWidth = sidebarWidth;
+
+    const onMouseMove = (moveEvent: MouseEvent) => {
+      const deltaX = moveEvent.clientX - startX;
+      let newWidth = startWidth + deltaX;
+      if (newWidth < 180) newWidth = 180;
+      if (newWidth > 480) newWidth = 480;
+      setSidebarWidth(newWidth);
+    };
+
+    const onMouseUp = () => {
+      setIsDraggingSidebar(false);
+      document.body.classList.remove("resizing-active");
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mouseup", onMouseUp);
+    };
+
+    window.addEventListener("mousemove", onMouseMove);
+    window.addEventListener("mouseup", onMouseUp);
+  };
 
   useEffect(() => {
     const handleFSChange = () => {
@@ -197,45 +261,54 @@ export function VisualizerApp() {
           onToggleFullscreen={toggleFullscreen}
         />
 
-        {/* Desktop Sidebar */}
-        <ExplorerSidebar
-          isOpen={isSidebarOpen}
-          nodes={fs.nodes}
-          recents={fs.recents}
-          expandedFolders={fs.expandedFolders}
-          searchQuery={fs.searchQuery}
-          activeFileId={activeFileId}
-          activeExampleIndex={activeExampleIndex}
-          isDirty={isDirty}
-          onSearchChange={fs.setSearchQuery}
-          onToggleFolder={fs.toggleFolder}
-          onOpenFile={handleOpenFile}
-          onSelectExample={handleSelectExample}
-          onCreateFile={async (name, pId) => {
-            const { file, error } = await fs.createFile(name, pId);
-            if (error) throw new Error(error);
-            if (file) handleOpenFile(file);
-          }}
-          onCreateFolder={async (name, pId) => {
-            const { error } = await fs.createFolder(name, pId);
-            if (error) throw new Error(error);
-          }}
-          onRenameNode={async (id, name) => {
-            const { error } = await fs.renameNode(id, name);
-            if (error) throw new Error(error);
-          }}
-          onDeleteNode={fs.deleteNode}
-          onOpenCreateFileModal={(pId) => {
-            setModalFileFolderId(pId);
-            setIsCreateFileOpen(true);
-          }}
-          onOpenCreateFolderModal={(pId) => {
-            setModalFileFolderId(pId);
-            setIsCreateFolderOpen(true);
-          }}
-          onOpenRenameModal={setRenameNodeId}
-          onOpenDeleteModal={setDeleteNodeId}
-        />
+        {/* Desktop Sidebar with Resizer Handle */}
+        {isSidebarOpen && (
+          <div className="sidebar-wrapper-container" style={{ width: `${sidebarWidth}px`, flexShrink: 0, display: 'flex' }}>
+            <ExplorerSidebar
+              isOpen={isSidebarOpen}
+              nodes={fs.nodes}
+              recents={fs.recents}
+              expandedFolders={fs.expandedFolders}
+              searchQuery={fs.searchQuery}
+              activeFileId={activeFileId}
+              activeExampleIndex={activeExampleIndex}
+              isDirty={isDirty}
+              onSearchChange={fs.setSearchQuery}
+              onToggleFolder={fs.toggleFolder}
+              onOpenFile={handleOpenFile}
+              onSelectExample={handleSelectExample}
+              onCreateFile={async (name, pId) => {
+                const { file, error } = await fs.createFile(name, pId);
+                if (error) throw new Error(error);
+                if (file) handleOpenFile(file);
+              }}
+              onCreateFolder={async (name, pId) => {
+                const { error } = await fs.createFolder(name, pId);
+                if (error) throw new Error(error);
+              }}
+              onRenameNode={async (id, name) => {
+                const { error } = await fs.renameNode(id, name);
+                if (error) throw new Error(error);
+              }}
+              onDeleteNode={fs.deleteNode}
+              onOpenCreateFileModal={(pId) => {
+                setModalFileFolderId(pId);
+                setIsCreateFileOpen(true);
+              }}
+              onOpenCreateFolderModal={(pId) => {
+                setModalFileFolderId(pId);
+                setIsCreateFolderOpen(true);
+              }}
+              onOpenRenameModal={setRenameNodeId}
+              onOpenDeleteModal={setDeleteNodeId}
+            />
+            <div
+              className={`sidebar-resizer-handle ${isDraggingSidebar ? "dragging" : ""}`}
+              onMouseDown={handleSidebarMouseDown}
+              title="Drag to resize sidebar width"
+            />
+          </div>
+        )}
 
         {/* Mobile Drawer Sidebar */}
         {isMobileDrawerOpen && (
@@ -294,15 +367,33 @@ export function VisualizerApp() {
             toast={toast}
           />
 
-          <div className="workspace">
-            <CodeEditor
-              value={activeCode}
-              onChange={setActiveCode}
-              activeLine={step?.line}
-              onReset={() => {
-                if (activeExampleIndex !== null) handleSelectExample(activeExampleIndex);
-                else if (activeFile) setActiveCode(activeFile.content);
+          <div className="workspace" ref={workspaceRef} style={{ display: 'flex', gap: 0 }}>
+            <div
+              className="editor-panel-box"
+              style={{
+                flex: `0 0 ${splitRatio * 100}%`,
+                width: `${splitRatio * 100}%`,
+                minWidth: '220px',
+                display: 'flex',
+                flexDirection: 'column',
               }}
+            >
+              <CodeEditor
+                value={activeCode}
+                onChange={setActiveCode}
+                activeLine={step?.line}
+                onReset={() => {
+                  if (activeExampleIndex !== null) handleSelectExample(activeExampleIndex);
+                  else if (activeFile) setActiveCode(activeFile.content);
+                }}
+              />
+            </div>
+
+            {/* Drag Splitter Bar between Editor and Visualizer */}
+            <div
+              className={`workspace-splitter ${isDraggingSplitter ? "dragging" : ""}`}
+              onMouseDown={handleSplitterMouseDown}
+              title="Drag to resize Editor vs Visualizer split"
             />
 
             <div className="visual-side">

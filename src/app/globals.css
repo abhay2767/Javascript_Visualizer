@@ -967,11 +967,74 @@ button { cursor: pointer; }
 }
 
 .app.fullscreen-mode .activity-bar,
+.app.fullscreen-mode .sidebar-wrapper-container,
 .app.fullscreen-mode .explorer-sidebar,
+.app.fullscreen-mode .editor-panel-box,
 .app.fullscreen-mode .editor-panel,
 .app.fullscreen-mode .visual-side {
   height: 100%;
 }
+
+/* VS Code Draggable Splitters */
+.sidebar-wrapper-container {
+  height: 664px;
+}
+
+.sidebar-wrapper-container .explorer-sidebar {
+  width: 100%;
+  height: 100%;
+}
+
+.sidebar-resizer-handle {
+  width: 7px;
+  margin: 0 -3px 0 2px;
+  background: transparent;
+  cursor: col-resize;
+  position: relative;
+  z-index: 10;
+  transition: background 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.sidebar-resizer-handle:hover,
+.sidebar-resizer-handle.dragging {
+  background: #8b6cff;
+  box-shadow: 0 0 10px rgba(139, 108, 255, 0.7);
+}
+
+.workspace-splitter {
+  width: 7px;
+  margin: 0 4px;
+  background: var(--border);
+  cursor: col-resize;
+  position: relative;
+  z-index: 10;
+  transition: background 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+  border-radius: 4px;
+}
+
+.workspace-splitter:hover,
+.workspace-splitter.dragging {
+  background: #8b6cff;
+  box-shadow: 0 0 10px rgba(139, 108, 255, 0.7);
+}
+
+.editor-panel-box {
+  height: 100%;
+}
+
+.editor-panel-box .editor-panel {
+  height: 100%;
+  flex: 1;
+}
+
+body.resizing-active {
+  user-select: none !important;
+  cursor: col-resize !important;
+}
+
 
 
 
